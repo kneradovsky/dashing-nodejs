@@ -1,0 +1,29 @@
+{
+  "name": "dashing-nodejs",
+  "version": "1.0.0",
+  "description": "websocket external server for dashing",
+  "main": "server.js",
+  "dependencies": {
+    "underscore": "^1.7.0",
+    "ws": "^0.6.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kneradovsky/dashing-nodejs.git"
+  },
+  "keywords": [
+    "dashing",
+    "websocket"
+  ],
+  "author": "kneradovsky",
+  "license": "Apache",
+  "bugs": {
+    "url": "https://github.com/kneradovsky/dashing-nodejs/issues"
+  },
+  "homepage": "https://github.com/kneradovsky/dashing-nodejs"
+}
