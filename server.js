@@ -14,7 +14,7 @@ var config = new Configuration();
 
 var wsserver = new WebSocketEvents(config.WebSocket);
 
-
+var logger=console;
 
 var router = express();
 var server = http.createServer(router);
@@ -25,7 +25,7 @@ router.use(function (req, res, next) {
   function (err, string) {
     if (err) return next(err)
     req.text = string
-    console.log(string)
+    logger.log("data="+string)
     next()
   })
 });
@@ -34,8 +34,9 @@ router.use(function (req, res, next) {
 
 
 router.post('/data/:id',function(req,res) {
-   id=req.params.id;
+   var id=req.params.id;
    var body=req.text;
+    logger.log("id:"+id+",post:"+body);
     bodyjson=null;
     try {
        var bodyjson=JSON.parse(body);
@@ -52,7 +53,7 @@ router.post('/data/:id',function(req,res) {
        res.statusCode = 400;
        return res.end('error: ' + err.toString());
     }
-       async(wsserver.send_event(id,bodyjson));
+       wsserver.send_event(id,bodyjson);
        res.statusCode=204;
        res.end();
 });
