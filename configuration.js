@@ -9,7 +9,7 @@ Configuration.Web = function() {
     this.port=3030;
     this.host="0.0.0.0";
     this.auth_token="YOUR_AUTH_TOKEN";
-    this.requestLimit='1mb';
+    this.requestLimit=1e6;
     this.encoding='UTF-8';
     return this;
 }
