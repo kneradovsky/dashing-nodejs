@@ -2,7 +2,7 @@ var should = require("should");
 var request = require("supertest");
 var fs = require("fs");
 
-var Configuration = require("../configuration.js");
+var Configuration = require("../config.js");
 var config=new Configuration();
 
 var req = request("http://"+process.env.IP+":"+config.Web.port);
