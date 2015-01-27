@@ -6,7 +6,6 @@ var async = require('async');
 
 var express = require('express');
 
-
 var Configuration = require("./configuration.js");
 var WebSocketEvents = require("./lib/websockets.js");
 
