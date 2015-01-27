@@ -5,7 +5,7 @@ var path = require('path');
 var async = require('async');
 
 var express = require('express');
-var getRawBody = require('raw-body');
+
 
 var Configuration = require("./configuration.js");
 var WebSocketEvents = require("./lib/websockets.js");
@@ -20,18 +20,6 @@ var router = express();
 var server = http.createServer(router);
 var auth_token=config.Web.auth_token;
 
-/*
-router.use(function (req, res, next) {
-  getRawBody(req, { limit: config.Web.requestLimit, encoding: config.Web.encoding}, 
-  function (err, string) {
-    if (err) return next(err)
-    req.text = string
-    logger.log("data="+string)
-    next()
-  })
-});
-*/
-
 
 
 router.post('/data/:id',function(req,res) {
@@ -42,7 +30,6 @@ router.post('/data/:id',function(req,res) {
        if(body.length>config.Web.requestLimit) req.connection.destroy();
    });
    req.on('end',function() {
-        //var body=req.text;
         logger.log("id:"+id+",post:"+body);
         bodyjson=null;
         try {
@@ -60,7 +47,7 @@ router.post('/data/:id',function(req,res) {
            res.statusCode = 400;
            return res.end('error: ' + err.toString());
         }
-           wsserver.send_event(id,bodyjson);
+           wsserver.emit('postevent',id,bodyjson);
            res.statusCode=204;
            res.end();
    });
