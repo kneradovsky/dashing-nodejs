@@ -5,7 +5,7 @@ var path = require('path');
 var async = require('async');
 
 var express = require('express');
-var getRawBody = require('raw-body');
+//var getRawBody = require('raw-body');
 
 var Configuration = require("./configuration.js");
 var WebSocketEvents = require("./lib/websockets.js");
