@@ -15,7 +15,7 @@
     "supertest": "^0.15.0"
   },
   "scripts": {
-    "test": "mocha -r should -r ./ -R spec",
+    "test": "mocha -r should -R spec -t 10000",
     "start": "node test_server.js config.js"
   },
   "repository": {

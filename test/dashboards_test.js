@@ -5,12 +5,48 @@ var WebSocket = require('ws');
 
 
 
-var Configuration = require("../config.js");
+var Configuration = require("../lib/configuration.js");
 var config=new Configuration();
 
-    var req = request("http://"+process.env.IP+":"+config.Web.port);
+
+
+var req = request("http://"+process.env.IP+":"+config.Web.port);
+
+var testserver=null; 
+
 
 describe('dashboards test',function() {
+
+    beforeEach(function(done) {
+        var count=0;
+        var testget=function() {
+            req.get('/').end(function(err,res) {
+               if(err) {
+                   console.log(err);
+                   
+                   if(++count<5) 
+                    setTimeout(testget,1000); //wait 1 second before next attempt
+                    else
+                        done();
+                } 
+                else done();
+                count.should.be.lessThan(5);
+            });
+        }
+        var testws = function() {
+            var ws1 = new WebSocket('ws://'+process.env.IP+':'+config.WebSocket.port+config.WebSocket.path);
+            ws1.on('open',function() {
+                console.log('ws connected');
+                ws1.close();
+                done();
+            }); 
+            ws1.on('error',function(err) {
+                count.should.be.lessThan(5);
+                testws();
+            });           
+        }
+        testget();
+    });
 
         it('all dashboards',function(done) {
             func = function(err,res) {if(err) throw err;};
@@ -69,3 +105,4 @@ describe('dashboards test',function() {
 
     });
 });
+
