@@ -10,7 +10,7 @@ var config=new Configuration();
 
 
 
-var req = request("http://"+process.env.IP+":"+config.Web.port);
+var req = request("http://localhost:"+config.Web.port);
 
 var testserver=null; 
 
@@ -34,7 +34,7 @@ describe('dashboards test',function() {
             });
         }
         var testws = function() {
-            var ws1 = new WebSocket('ws://'+process.env.IP+':'+config.WebSocket.port+config.WebSocket.path);
+            var ws1 = new WebSocket('ws://localhost:'+config.WebSocket.port+config.WebSocket.path);
             ws1.on('open',function() {
                 console.log('ws connected');
                 ws1.close();
@@ -52,7 +52,7 @@ describe('dashboards test',function() {
             func = function(err,res) {if(err) throw err;};
             
 
-            var ws = new WebSocket('ws://'+process.env.IP+':'+config.WebSocket.port+config.WebSocket.path);
+            var ws = new WebSocket('ws://localhost:'+config.WebSocket.port+config.WebSocket.path);
             ws.on('open',function() {
                 ws.send(JSON.stringify({type: 'subscribe',data: {events:['d5']}}));
                 
@@ -74,7 +74,7 @@ describe('dashboards test',function() {
 
     it('one dashboard',function(done) {
 
-        var ws = new WebSocket('ws://'+process.env.IP+':'+config.WebSocket.port+config.WebSocket.path);
+        var ws = new WebSocket('ws://localhost:'+config.WebSocket.port+config.WebSocket.path);
         var msgcount=0;
         var msgs=[];
         ws.on('open',function() {

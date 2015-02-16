@@ -9,7 +9,7 @@ var Configuration = require("../lib/configuration.js");
 var config=new Configuration();
 
 
-var req = request("http://"+process.env.IP+":"+config.Web.port);
+var req = request("http://localhost:"+config.Web.port);
 
 var testserver=null;
 
@@ -32,7 +32,7 @@ describe('web socket test suite',function(done) {
             });
         }
         var testws = function() {
-            var ws1 = new WebSocket('ws://'+process.env.IP+':'+config.WebSocket.port+config.WebSocket.path);
+            var ws1 = new WebSocket('ws://localhost:'+config.WebSocket.port+config.WebSocket.path);
             ws1.on('open',function() {
                 console.log('ws connected');
                 ws1.close();
@@ -55,7 +55,7 @@ describe('web sockets connection test',function(done) {
 
     
     it('invalid json',function(done) {
-        var ws = new WebSocket('ws://'+process.env.IP+':'+config.WebSocket.port+config.WebSocket.path);
+        var ws = new WebSocket('ws://localhost:'+config.WebSocket.port+config.WebSocket.path);
         var error=true;
         ws.on('open',function() {
             ws.send('{ype: "subscribe,data:{events:["id1","id2"]}');
@@ -68,7 +68,7 @@ describe('web sockets connection test',function(done) {
     }); 
     
     it('valid json',function(done) {
-        var ws = new WebSocket('ws://'+process.env.IP+':'+config.WebSocket.port+config.WebSocket.path);
+        var ws = new WebSocket('ws://localhost:'+config.WebSocket.port+config.WebSocket.path);
         var error=false;
         ws.on('open',function() {
             ws.send(JSON.stringify({type: 'subscribe',data:{events:['id1','id2']}}));
@@ -94,7 +94,7 @@ describe('subscriptions test',function(done) {
 
     
     it('test invalid subscription',function(done) {
-        var ws = new WebSocket('ws://'+process.env.IP+':'+config.WebSocket.port+config.WebSocket.path);
+        var ws = new WebSocket('ws://localhost:'+config.WebSocket.port+config.WebSocket.path);
         ws.on('open',function() {
             ws.send(JSON.stringify({type: 'subscribe'}));
         }); 
@@ -111,7 +111,7 @@ describe('subscriptions test',function(done) {
             req.post('/data/d1').send(JSON.stringify({auth_token:config.Web.auth_token,data:'a1'})).expect(204).end(func);
             req.post('/data/d2').send(JSON.stringify({auth_token:config.Web.auth_token,data:'a2'})).expect(204).end(func);
             
-            var ws = new WebSocket('ws://'+process.env.IP+':'+config.WebSocket.port+config.WebSocket.path);
+            var ws = new WebSocket('ws://localhost:'+config.WebSocket.port+config.WebSocket.path);
             ws.on('open',function() {
                 ws.send(JSON.stringify({type: 'subscribe',data: {events:['d2','d1']}}));
             }); 
@@ -132,7 +132,7 @@ describe('subscriptions test',function(done) {
 
     it('test receive events',function(done) {
 
-        var ws = new WebSocket('ws://'+process.env.IP+':'+config.WebSocket.port+config.WebSocket.path);
+        var ws = new WebSocket('ws://localhost:'+config.WebSocket.port+config.WebSocket.path);
         var msgcount=0;
         var msgs=[];
         ws.on('open',function() {
@@ -177,7 +177,7 @@ describe('history test',function(done) {
             req.post('/data/d5').send(JSON.stringify({auth_token:config.Web.auth_token,data1:'a1'})).expect(204).end(func);
             req.post('/data/d5').send(JSON.stringify({auth_token:config.Web.auth_token,data2:'a2'})).expect(204).end(func);
             
-            var ws = new WebSocket('ws://'+process.env.IP+':'+config.WebSocket.port+config.WebSocket.path);
+            var ws = new WebSocket('ws://localhost:'+config.WebSocket.port+config.WebSocket.path);
             ws.on('open',function() {
                 ws.send(JSON.stringify({type: 'subscribe',data: {events:['d5']}}));
             }); 
@@ -197,7 +197,7 @@ describe('history test',function(done) {
 
     it('test receive events',function(done) {
 
-        var ws = new WebSocket('ws://'+process.env.IP+':'+config.WebSocket.port+config.WebSocket.path);
+        var ws = new WebSocket('ws://localhost:'+config.WebSocket.port+config.WebSocket.path);
         var msgcount=0;
         var msgs=[];
         ws.on('open',function() {

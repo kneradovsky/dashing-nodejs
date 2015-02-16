@@ -5,7 +5,7 @@ var fs = require("fs");
 var Configuration = require("../lib/configuration.js");
 var config=new Configuration();
 
-var req = request("http://"+process.env.IP+":"+config.Web.port);
+var req = request("http://localhost:"+config.Web.port);
 
 var testserver=null;
 
@@ -28,7 +28,7 @@ describe('test web server',function() {
             });
         }
         var testws = function() {
-            var ws1 = new WebSocket('ws://'+process.env.IP+':'+config.WebSocket.port+config.WebSocket.path);
+            var ws1 = new WebSocket('ws://localhost:'+config.WebSocket.port+config.WebSocket.path);
             ws1.on('open',function() {
                 console.log('ws connected');
                 ws1.close();
